@@ -32,6 +32,8 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
 #hero .glow{position:absolute;top:50%;left:50%;width:90vmin;height:90vmin;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,212,255,.05) 0%,transparent 70%);pointer-events:none}
 .hero-title{font-size:clamp(40px,8vw,100px);font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:16px}
 .hero-title .g{background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-title .hl{background:linear-gradient(135deg,#00d4ff,#a78bfa,#7c3aed);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub .hl{background:linear-gradient(90deg,#00d4ff,#7c3aed);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:500}
 .hero-sub{font-size:clamp(15px,1.8vw,24px);color:rgba(255,255,255,.35);letter-spacing:.05em;font-weight:400}
 .hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.2);font-size:10px;letter-spacing:.15em;animation:pulse 2.5s ease-in-out infinite}
 .hero-scroll .l{width:1px;height:36px;background:linear-gradient(180deg,rgba(255,255,255,.25),transparent)}
@@ -223,8 +225,8 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
     <div class="w w4"><div class="b"><span class="d r"></span><span class="d y"></span><span class="d g"></span></div></div>
   </div>
   <div class="section-inner">
-    <h1 class="hero-title animate">AuraOS<span class="g">.</span></h1>
-    <p class="hero-sub animate d1">你的电脑，何必再有窗口</p>
+    <h1 class="hero-title animate"><span class="hl">AuraOS</span><span class="g">.</span></h1>
+    <p class="hero-sub animate d1">你的电脑，何必再有<span class="hl">窗口</span></p>
   </div>
   <div class="hero-scroll"><span>SCROLL</span><div class="l"></div></div>
 </section>
