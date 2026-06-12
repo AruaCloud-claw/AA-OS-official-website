@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AuraOS</title>
+<style>
+/* ============================================
+   Reset & Base
+   ============================================ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter','PingFang SC','Microsoft YaHei',sans-serif;
+  background:#050508;color:#fff;overflow-x:hidden
+}
+
+/* ============================================
+   Layout
+   ============================================ */
+.section{
+  position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;padding:60px 24px
+}
+.section-inner{position:relative;z-index:2;max-width:1200px;width:100%;text-align:center}
+
+/* ============================================
+   Typography — ultra minimal
+   ============================================ */
+h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
+.section-title{
+  font-size:clamp(40px,7vw,80px);margin-bottom:8px;
+  background:linear-gradient(135deg,#fff 30%,rgba(255,255,255,0.5));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.section-sub{
+  font-size:clamp(14px,1.3vw,18px);font-weight:400;
+  color:rgba(255,255,255,0.5);letter-spacing:0.08em
+}
+
+/* ============================================
+   Nav
+   ============================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:52px;
+  background:rgba(5,5,8,0.6);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.04)
+}
+.nav-logo{
+  font-size:15px;font-weight:700;letter-spacing:-0.01em;
+  background:linear-gradient(135deg,#00d4ff,#7c3aed);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.nav-dots{display:flex;gap:8px;align-items:center}
+.nav-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(255,255,255,0.2);transition:all 0.5s cubic-bezier(.22,1,.36,1);cursor:pointer
+}
+.nav-dot.active{
+  background:#00d4ff;box-shadow:0 0 14px rgba(0,212,255,0.5);
+  width:22px;border-radius:3px
+}
+
+/* ============================================
+   Animate helper
+   ============================================ */
+.animate{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+.animate.v{opacity:1;transform:translateY(0)}
+.anim-d1{transition-delay:.15s}.anim-d2{transition-delay:.3s}.anim-d3{transition-delay:.45s}.anim-d4{transition-delay:.6s}
+
+/* ============================================
+   1 — HERO
+   ============================================ */
+#hero{background:#050508}
+#hero::before{
+  content:'';position:absolute;top:50%;left:50%;
+  width:90vmin;height:90vmin;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(0,212,255,.04) 0%,transparent 70%);
+  pointer-events:none
+}
+#hero::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:60px 60px;pointer-events:none
+}
+.hero-title{
+  font-size:clamp(44px,9vw,110px);font-weight:800;letter-spacing:-0.04em;line-height:1;margin-bottom:16px
+}
+.hero-title .grad{
+  background:linear-gradient(135deg,#00d4ff,#7c3aed);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.hero-sub{
+  font-size:clamp(16px,2vw,26px);color:rgba(255,255,255,.4);letter-spacing:.05em;font-weight:400
+}
+.hero-scroll{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:rgba(255,255,255,.25);font-size:10px;letter-spacing:.15em;
+  animation:pulse 2.5s ease-in-out infinite
+}
+.hero-scroll .line{width:1px;height:36px;background:linear-gradient(180deg,rgba(255,255,255,.3),transparent)}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.7}}
+
+/* Window particles floating in hero */
+.w-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.w-p{
+  position:absolute;border:1px solid rgba(255,255,255,.06);border-radius:8px;
+  background:rgba(255,255,255,.02);backdrop-filter:blur(2px);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:rgba(255,255,255,.2);
+  animation:float linear infinite;opacity:0
+}
+.w-p .dot{position:absolute;top:7px;left:8px;width:4px;height:4px;border-radius:50%}
+.w-p1{width:140px;height:100px;top:15%;left:5%;animation-duration:20s}
+.w-p1 .dot{background:#ff5f57}
+.w-p2{width:110px;height:80px;top:8%;right:8%;animation-duration:25s}
+.w-p2 .dot{background:#ffbd2e}
+.w-p3{width:90px;height:65px;bottom:20%;left:12%;animation-duration:22s}
+.w-p3 .dot{background:#28c840}
+.w-p4{width:160px;height:110px;bottom:10%;right:5%;animation-duration:28s}
+.w-p4 .dot{background:#ff5f57}
+@keyframes float{
+  0%{transform:translateY(100px) rotate(-3deg);opacity:0}
+  10%{opacity:.6}90%{opacity:.6}
+  100%{transform:translateY(-100vh) rotate(3deg);opacity:0}
+}
+
+/* ============================================
+   2 — 外置大脑
+   ============================================ */
+#brain{background:linear-gradient(180deg,#050508,#0a0a18,#050508)}
+.brain-visual{
+  position:relative;width:100%;max-width:700px;margin:32px auto 0;
+  display:flex;justify-content:center;align-items:center;min-height:320px
+}
+.brain-ring{
+  position:absolute;border:1px solid rgba(0,212,255,.1);border-radius:50%;
+  animation:spin 20s linear infinite
+}
+.brain-ring:nth-child(1){width:200px;height:200px;border-color:rgba(0,212,255,.08)}
+.brain-ring:nth-child(2){width:280px;height:280px;border-color:rgba(124,58,237,.08);animation-direction:reverse;animation-duration:25s}
+.brain-ring:nth-child(3){width:360px;height:360px;border-color:rgba(0,212,255,.05);animation-duration:30s}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.brain-core{
+  width:100px;height:100px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,.15),rgba(124,58,237,.1));
+  box-shadow:0 0 60px rgba(0,212,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;z-index:2;position:relative
+}
+.brain-node{
+  position:absolute;width:70px;height:70px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:20px;z-index:3;transition:all .4s ease;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);backdrop-filter:blur(8px)
+}
+.brain-node:hover{transform:scale(1.15);border-color:rgba(0,212,255,.3);box-shadow:0 0 30px rgba(0,212,255,.1)}
+.brain-node .lbl{font-size:10px;color:rgba(255,255,255,.5);margin-top:2px;letter-spacing:.05em}
+.bn1{top:0;left:50%;transform:translateX(-50%)}
+.bn2{bottom:5%;right:5%}
+.bn3{bottom:5%;left:5%}
+
+/* Neural connection lines */
+.connection{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.connection line{stroke:rgba(0,212,255,.08);stroke-width:1;stroke-dasharray:6 4;animation:dash 3s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-20}}
+
+/* ============================================
+   3 — 特种团队
+   ============================================ */
+#team{background:linear-gradient(180deg,#050508,#0b0b1d,#050508)}
+.orbit-visual{
+  position:relative;width:100%;max-width:750px;margin:32px auto 0;
+  display:flex;align-items:center;justify-content:center;min-height:380px
+}
+.orbit-center{
+  width:130px;height:130px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,.12),rgba(124,58,237,.08));
+  box-shadow:0 0 50px rgba(0,212,255,.08);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:4;
+  border:1px solid rgba(0,212,255,.1)
+}
+.orbit-center .ic{font-size:28px}
+.orbit-center .lb{font-size:11px;font-weight:600;margin-top:2px;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.orbit-ring{
+  position:absolute;border:1px solid rgba(255,255,255,.06);border-radius:50%;animation:spin 30s linear infinite
+}
+.or1{width:220px;height:220px}.or2{width:340px;height:340px;animation-direction:reverse;animation-duration:35s}
+.or3{width:480px;height:480px;animation-duration:40s}
+.orbit-node{
+  position:absolute;width:64px;height:64px;border-radius:16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(8px);transition:all .4s ease;z-index:3
+}
+.orbit-node:hover{transform:scale(1.12);border-color:rgba(0,212,255,.25);box-shadow:0 0 20px rgba(0,212,255,.08)}
+.orbit-node .ic{font-size:18px}
+.orbit-node .lb{font-size:9px;color:rgba(255,255,255,.45);margin-top:1px}
+
+/* ============================================
+   4 — 窗口的终结
+   ============================================ */
+#paradigm{background:#050508}
+.window-stage{
+  position:relative;width:100%;max-width:700px;margin:32px auto 0;min-height:320px;
+  display:flex;align-items:center;justify-content:center
+}
+.win{
+  position:absolute;border:1px solid rgba(255,255,255,.08);border-radius:10px;
+  background:rgba(255,255,255,.02);backdrop-filter:blur(4px);
+  transition:all 1.4s cubic-bezier(.22,1,.36,1);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column
+}
+.win .dots{
+  position:absolute;top:10px;left:12px;display:flex;gap:4px
+}
+.win .d{width:6px;height:6px;border-radius:50%}
+.win .d1{background:#ff5f57}.win .d2{background:#ffbd2e}.win .d3{background:#28c840}
+.win .wl{font-size:10px;color:rgba(255,255,255,.3);margin-top:14px}
+.w1{width:260px;height:170px;top:5%;left:8%;transform:rotate(-4deg)}
+.w2{width:220px;height:145px;top:10%;right:8%;transform:rotate(6deg)}
+.w3{width:180px;height:120px;bottom:5%;left:25%;transform:rotate(-2deg)}
+
+#paradigm.v .win{opacity:0;transform:scale(.7) translateY(30px);filter:blur(10px)}
+#paradigm.v .w1{transition-delay:.2s}#paradigm.v .w2{transition-delay:.5s}#paradigm.v .w3{transition-delay:.8s}
+
+.dissolve-reveal{
+  position:relative;z-index:3;text-align:center;
+  opacity:0;transform:scale(.85);transition:all 1s cubic-bezier(.22,1,.36,1)
+}
+#paradigm.v .dissolve-reveal{opacity:1;transform:scale(1);transition-delay:1.1s}
+.dissolve-reveal .big{font-size:56px;display:block;margin-bottom:12px}
+.dissolve-reveal h3{font-size:clamp(22px,3vw,36px);font-weight:700}
+.dissolve-reveal p{font-size:14px;color:rgba(255,255,255,.4);margin-top:6px}
+
+/* ============================================
+   5 — CTA
+   ============================================ */
+#cta{background:linear-gradient(180deg,#050508,#0a0a18,#050508)}
+.cta-title{
+  font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-0.03em;
+  background:linear-gradient(135deg,#fff 30%,rgba(255,255,255,.4));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:24px
+}
+.cta-btn{
+  display:inline-block;padding:14px 44px;border-radius:50px;
+  background:linear-gradient(135deg,#00d4ff,#7c3aed);
+  color:#fff;font-size:15px;font-weight:600;text-decoration:none;
+  transition:all .4s ease;letter-spacing:.03em;border:none;cursor:pointer;
+  position:relative;overflow:hidden
+}
+.cta-btn::after{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+  transition:left .6s ease
+}
+.cta-btn:hover::after{left:100%}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,255,.25)}
+.footer{font-size:11px;color:rgba(255,255,255,.2);margin-top:40px;letter-spacing:.08em}
+.footer span{background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media(max-width:768px){
+  .section{padding:40px 16px}
+  .w-p1{width:100px;height:70px}.w-p2{width:80px;height:60px}.w-p3{width:70px;height:50px}.w-p4{width:110px;height:80px}
+  .nav{padding:0 16px;height:48px}
+  .brain-ring:nth-child(1){width:150px;height:150px}
+  .brain-ring:nth-child(2){width:210px;height:210px}
+  .brain-ring:nth-child(3){width:270px;height:270px}
+  .brain-node{width:56px;height:56px;font-size:16px}
+  .bn1{top:2%}.bn2{bottom:8%;right:3%}.bn3{bottom:8%;left:3%}
+  .or1{width:180px;height:180px}.or2{width:270px;height:270px}.or3{width:360px;height:360px}
+  .orbit-node{width:50px;height:50px;border-radius:12px}
+  .orbit-node .ic{font-size:14px}.orbit-node .lb{font-size:8px}
+  .orbit-center{width:100px;height:100px}.orbit-center .ic{font-size:22px}.orbit-center .lb{font-size:10px}
+  .w1{width:180px;height:120px}.w2{width:150px;height:100px}.w3{width:130px;height:90px}
+  .dissolve-reveal .big{font-size:40px}
+}
+@media(max-width:480px){
+  .brain-ring:nth-child(3){width:220px;height:220px}
+  .or2{width:230px;height:230px}.or3{width:300px;height:300px}
+}
+
+/* ============================================
+   Selection & Scrollbar
+   ============================================ */
+::selection{background:rgba(0,212,255,.3);color:#fff}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#050508}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.15)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">AuraOS</div>
+  <div class="nav-dots">
+    <div class="nav-dot active" data-i="0"></div>
+    <div class="nav-dot" data-i="1"></div>
+    <div class="nav-dot" data-i="2"></div>
+    <div class="nav-dot" data-i="3"></div>
+    <div class="nav-dot" data-i="4"></div>
+  </div>
+</nav>
+
+<!-- ====== 1 — HERO ====== -->
+<section class="section" id="hero">
+  <div class="w-particles">
+    <div class="w-p w-p1"><span class="dot"></span></div>
+    <div class="w-p w-p2"><span class="dot"></span></div>
+    <div class="w-p w-p3"><span class="dot"></span></div>
+    <div class="w-p w-p4"><span class="dot"></span></div>
+  </div>
+  <div class="section-inner">
+    <h1 class="hero-title animate">AuraOS<span class="grad">.</span></h1>
+    <p class="hero-sub animate anim-d1">你的电脑，何必再有窗口</p>
+  </div>
+  <div class="hero-scroll"><span>SCROLL</span><div class="line"></div></div>
+</section>
+
+<!-- ====== 2 — 外置大脑 ====== -->
+<section class="section" id="brain">
+  <div class="section-inner">
+    <p class="section-sub animate">个人 · 外置大脑</p>
+    <h2 class="section-title animate anim-d1">另一个你</h2>
+
+    <div class="brain-visual animate anim-d2">
+      <svg class="connection" viewBox="0 0 700 500">
+        <line x1="350" y1="80" x2="350" y2="250"/>
+        <line x1="350" y1="250" x2="580" y2="420"/>
+        <line x1="350" y1="250" x2="120" y2="420"/>
+      </svg>
+      <div class="brain-ring"></div>
+      <div class="brain-ring"></div>
+      <div class="brain-ring"></div>
+      <div class="brain-core">🧠</div>
+      <div class="brain-node bn1"><span>📝</span><span class="lbl">记忆</span></div>
+      <div class="brain-node bn2"><span>⚡</span><span class="lbl">执行</span></div>
+      <div class="brain-node bn3"><span>🔮</span><span class="lbl">预判</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 3 — 特种团队 ====== -->
+<section class="section" id="team">
+  <div class="section-inner">
+    <p class="section-sub animate">企业 · 特种团队</p>
+    <h2 class="section-title animate anim-d1">一支特战队</h2>
+
+    <div class="orbit-visual animate anim-d2">
+      <div class="orbit-ring or1"></div>
+      <div class="orbit-ring or2"></div>
+      <div class="orbit-ring or3"></div>
+      <div class="orbit-center"><span class="ic">🎯</span><span class="lb">指挥中枢</span></div>
+      <!-- Nodes positioned using CSS calc on orbit -->
+      <div class="orbit-node" style="top:calc(50% - 32px);left:calc(50% + 100px);transform:translateY(-50%)"><span class="ic">📝</span><span class="lb">文案</span></div>
+      <div class="orbit-node" style="top:calc(50% + 100px);left:calc(50% + 70px)"><span class="ic">💻</span><span class="lb">开发</span></div>
+      <div class="orbit-node" style="top:calc(50% + 120px);left:calc(50% - 40px)"><span class="ic">📊</span><span class="lb">分析</span></div>
+      <div class="orbit-node" style="top:calc(50% - 32px);right:calc(50% + 100px);transform:translateY(-50%)"><span class="ic">🎨</span><span class="lb">设计</span></div>
+      <div class="orbit-node" style="top:calc(50% + 100px);right:calc(50% + 70px)"><span class="ic">🔍</span><span class="lb">研究</span></div>
+      <div class="orbit-node" style="top:calc(50% + 120px);right:calc(50% - 40px)"><span class="ic">📋</span><span class="lb">管理</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 4 — 窗口的终结 ====== -->
+<section class="section" id="paradigm">
+  <div class="section-inner">
+    <p class="section-sub animate">范式转移</p>
+    <h2 class="section-title animate anim-d1">窗口的终结</h2>
+
+    <div class="window-stage animate anim-d2">
+      <div class="win w1">
+        <div class="dots"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span></div>
+        <span class="wl">浏览器</span>
+      </div>
+      <div class="win w2">
+        <div class="dots"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span></div>
+        <span class="wl">文档</span>
+      </div>
+      <div class="win w3">
+        <div class="dots"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span></div>
+        <span class="wl">终端</span>
+      </div>
+      <div class="dissolve-reveal">
+        <span class="big">🌀</span>
+        <h3>你只需要开口</h3>
+        <p>其余一切，交给 AuraOS</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 5 — CTA ====== -->
+<section class="section" id="cta">
+  <div class="section-inner">
+    <h2 class="cta-title animate">告别窗口</h2>
+    <p class="section-sub animate anim-d1" style="margin-bottom:28px;font-size:clamp(13px,1.1vw,16px);color:rgba(255,255,255,.3)">你只需要——说出来</p>
+    <a href="#" class="cta-btn animate anim-d2">了解更多</a>
+    <p class="footer animate anim-d3"><span>AuraOS</span> · 你的电脑，何必再有窗口</p>
+  </div>
+</section>
+
+<script>
+// Intersection Observer for animations
+const obs=new IntersectionObserver(e=>{e.forEach(e=>{
+  if(e.isIntersecting){
+    e.target.querySelectorAll('.animate').forEach(e=>e.classList.add('v'))
+    e.target.classList.add('v')
+    const s=document.querySelectorAll('.section'),d=document.querySelectorAll('.nav-dot')
+    const i=Array.from(s).indexOf(e.target)
+    if(i>=0)d.forEach((e,n)=>{e.classList.toggle('active',n===i)})
+  }
+})},{threshold:.35})
+document.querySelectorAll('.section').forEach(e=>obs.observe(e))
+
+// Nav dot click
+document.querySelectorAll('.nav-dot').forEach(e=>{e.addEventListener('click',()=>{
+  const s=document.querySelectorAll('.section')[parseInt(e.dataset.i)]
+  if(s)s.scrollIntoView({behavior:'smooth'})
+})})
+
+// Parallax on hero
+document.addEventListener('scroll',()=>{
+  const y=window.pageYOffset,h=document.querySelector('#hero')
+  if(h&&y<h.offsetHeight){
+    h.style.transform=`translateY(${y*.15}px)`
+    h.style.opacity=1-y/h.offsetHeight*1.2
+  }
+})
+</script>
+</body>
+</html>
