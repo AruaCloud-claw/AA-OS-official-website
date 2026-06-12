@@ -9,7 +9,7 @@
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter','PingFang SC','Microsoft YaHei',sans-serif;background:#050508;color:#fff;overflow-x:hidden}
 
-.section{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:60px 24px}
+.section{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:80px 24px}
 .section-inner{position:relative;z-index:2;max-width:1000px;width:100%;text-align:center}
 
 h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
@@ -20,7 +20,6 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
 .animate.v{opacity:1;transform:translateY(0)}
 .d1{transition-delay:.15s}.d2{transition-delay:.3s}.d3{transition-delay:.45s}.d4{transition-delay:.6s}
 
-/* Nav */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:52px;background:rgba(5,5,8,.6);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04)}
 .nav-logo{font-size:15px;font-weight:700;letter-spacing:-.01em;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .nav-dots{display:flex;gap:8px}
@@ -37,8 +36,6 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
 .hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.2);font-size:10px;letter-spacing:.15em;animation:pulse 2.5s ease-in-out infinite}
 .hero-scroll .l{width:1px;height:36px;background:linear-gradient(180deg,rgba(255,255,255,.25),transparent)}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.7}}
-
-/* Hero floating window particles */
 .wp{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .w{position:absolute;border:1px solid rgba(255,255,255,.05);border-radius:8px;background:rgba(255,255,255,.015);backdrop-filter:blur(2px);font-size:8px;color:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;animation:fl linear infinite;opacity:0}
 .w .d{position:absolute;top:6px;left:7px;width:3px;height:3px;border-radius:50%}
@@ -48,99 +45,84 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
 .w4{width:140px;height:95px;bottom:8%;right:4%;animation-duration:28s}.w4 .d{background:#ff5f57}
 @keyframes fl{0%{transform:translateY(80px) rotate(-3deg);opacity:0}10%{opacity:.4}90%{opacity:.4}100%{transform:translateY(-80vh) rotate(3deg);opacity:0}}
 
-/* === 2 — 外置大脑（碎片→吸收→清爽）=== */
+/* === 2 — 外置大脑 ================
+   节奏：先看清单 → 碎碎念 → 清除 → 清爽
+   ================================ */
 #brain{background:linear-gradient(180deg,#050508,#0a0a18,#050508);position:relative}
 
-/* 碎片云 — 大量日常事务图标 */
-.fragment-cloud{
-  position:absolute;inset:0;pointer-events:none;
-  transition:all 1.4s cubic-bezier(.22,1,.36,1)
-}
+/* 碎片云：默认全部可见，又大又清楚 */
+.fc{position:absolute;inset:0;pointer-events:none}
 .fr{
-  position:absolute;font-size:clamp(13px,1.3vw,18px);
-  color:rgba(255,255,255,.4);
-  transition:all 1.5s cubic-bezier(.22,1,.36,1);
-  display:flex;flex-direction:column;align-items:center;gap:2px
+  position:absolute;display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-size:clamp(28px,3.2vw,42px);color:rgba(255,255,255,.55);
+  transition:all 2.2s cubic-bezier(.55,0,.45,1)
 }
-.fr .l{font-size:clamp(7px,.6vw,9px);color:rgba(255,255,255,.2);letter-spacing:.02em;white-space:nowrap}
+.fr .l{font-size:clamp(11px,1vw,14px);color:rgba(255,255,255,.3);letter-spacing:.03em;white-space:nowrap;font-weight:400}
 
-/* After absorption — scattered elements converge to center */
-#brain.v .fr{
-  opacity:0!important;
-  transform:translate(0,0) scale(.3)!important;
-  filter:blur(4px)!important
-}
-/* Stagger the absorption */
-#brain.v .f1{transition-delay:.1s!important}
-#brain.v .f2{transition-delay:.2s!important}
-#brain.v .f3{transition-delay:.15s!important}
-#brain.v .f4{transition-delay:.25s!important}
-#brain.v .f5{transition-delay:.3s!important}
-#brain.v .f6{transition-delay:.35s!important}
-#brain.v .f7{transition-delay:.2s!important}
-#brain.v .f8{transition-delay:.4s!important}
-#brain.v .f9{transition-delay:.45s!important}
-#brain.v .f10{transition-delay:.28s!important}
-#brain.v .f11{transition-delay:.5s!important}
-#brain.v .f12{transition-delay:.38s!important}
-#brain.v .f13{transition-delay:.55s!important}
-#brain.v .f14{transition-delay:.42s!important}
-#brain.v .f15{transition-delay:.48s!important}
-#brain.v .f16{transition-delay:.6s!important}
-#brain.v .f17{transition-delay:.52s!important}
-#brain.v .f18{transition-delay:.65s!important}
-#brain.v .f19{transition-delay:.58s!important}
-#brain.v .f20{transition-delay:.7s!important}
+/* 触发吸收：延迟2秒才开始消失 */
+#brain.v .fr{opacity:0!important;transform:translate(0,0) scale(.15)!important;filter:blur(8px)!important}
+#brain.v .f1{transition-delay:2.0s!important}
+#brain.v .f2{transition-delay:2.3s!important}
+#brain.v .f3{transition-delay:2.1s!important}
+#brain.v .f4{transition-delay:2.5s!important}
+#brain.v .f5{transition-delay:2.2s!important}
+#brain.v .f6{transition-delay:2.7s!important}
+#brain.v .f7{transition-delay:2.4s!important}
+#brain.v .f8{transition-delay:2.9s!important}
+#brain.v .f9{transition-delay:2.6s!important}
+#brain.v .f10{transition-delay:3.1s!important}
+#brain.v .f11{transition-delay:2.8s!important}
+#brain.v .f12{transition-delay:3.3s!important}
+#brain.v .f13{transition-delay:3.0s!important}
+#brain.v .f14{transition-delay:3.5s!important}
+#brain.v .f15{transition-delay:3.2s!important}
+#brain.v .f16{transition-delay:3.7s!important}
+#brain.v .f17{transition-delay:3.4s!important}
+#brain.v .f18{transition-delay:3.9s!important}
+#brain.v .f19{transition-delay:3.6s!important}
+#brain.v .f20{transition-delay:4.1s!important}
+#brain.v .f21{transition-delay:3.8s!important}
+#brain.v .f22{transition-delay:4.3s!important}
+#brain.v .f23{transition-delay:4.0s!important}
+#brain.v .f24{transition-delay:4.5s!important}
 
-/* After absorption — the clarity reveal */
-.brain-after{position:relative;z-index:5;opacity:0;transform:scale(.85);transition:all 1.2s cubic-bezier(.22,1,.36,1)}
-#brain.v .brain-after{opacity:1;transform:scale(1);transition-delay:.8s}
-.brain-core-icon{width:120px;height:120px;border-radius:50%;margin:0 auto 20px;
-  background:radial-gradient(circle,rgba(0,212,255,.12),rgba(124,58,237,.08));
-  box-shadow:0 0 80px rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.1);
-  display:flex;align-items:center;justify-content:center;font-size:48px}
-.brain-after h3{font-size:clamp(20px,2.5vw,32px);font-weight:700;margin-bottom:6px}
-.brain-after p{font-size:clamp(13px,1.1vw,16px);color:rgba(255,255,255,.35);font-weight:400}
+/* 吸收后的清爽画面：等所有碎片消失完才浮现 */
+.br{position:relative;z-index:5;opacity:0;transform:scale(.8);transition:all 1.4s cubic-bezier(.22,1,.36,1);max-width:520px;margin:0 auto}
+#brain.v .br{opacity:1;transform:scale(1);transition-delay:5.2s!important}
+.bc{width:130px;height:130px;border-radius:50%;margin:0 auto 24px;background:radial-gradient(circle,rgba(0,212,255,.12),rgba(124,58,237,.08));box-shadow:0 0 80px rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;font-size:52px}
+.br h3{font-size:clamp(24px,2.8vw,36px);font-weight:700;margin-bottom:8px}
+.br p{font-size:clamp(14px,1.1vw,17px);color:rgba(255,255,255,.35);font-weight:400;line-height:1.5}
 
-/* === 3 — 特种团队 === */
+/* === 3 — 特种团队（同上节奏）=== */
 #team{background:linear-gradient(180deg,#050508,#0b0b1d,#050508)}
+.rc{position:absolute;inset:0;pointer-events:none}
+.rl{position:absolute;display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:clamp(26px,3vw,38px);
+  transition:all 2.2s cubic-bezier(.55,0,.45,1)}
+.rl .t{font-size:clamp(10px,1vw,13px);color:rgba(255,255,255,.25);white-space:nowrap;letter-spacing:.02em}
+#team.v .rl{opacity:0!important;transform:translate(0,0) scale(.15)!important;filter:blur(8px)!important}
+#team.v .r1{transition-delay:2.0s!important}
+#team.v .r2{transition-delay:2.3s!important}
+#team.v .r3{transition-delay:2.1s!important}
+#team.v .r4{transition-delay:2.5s!important}
+#team.v .r5{transition-delay:2.2s!important}
+#team.v .r6{transition-delay:2.7s!important}
+#team.v .r7{transition-delay:2.4s!important}
+#team.v .r8{transition-delay:2.9s!important}
+#team.v .r9{transition-delay:2.6s!important}
+#team.v .r10{transition-delay:3.1s!important}
+#team.v .r11{transition-delay:2.8s!important}
+#team.v .r12{transition-delay:3.3s!important}
 
-/* Dense role cloud — then absorbed */
-.role-cloud{position:absolute;inset:0;pointer-events:none}
-.rl{position:absolute;display:flex;flex-direction:column;align-items:center;gap:2px;
-  transition:all 1.5s cubic-bezier(.22,1,.36,1)}
-.rl .e{font-size:clamp(16px,1.6vw,22px)}
-.rl .t{font-size:clamp(7px,.6vw,9px);color:rgba(255,255,255,.2);white-space:nowrap}
-#team.v .rl{opacity:0!important;transform:translate(0,0) scale(.2)!important;filter:blur(5px)!important}
-
-/* Stagger disappear */
-#team.v .r1{transition-delay:.1s!important}
-#team.v .r2{transition-delay:.2s!important}
-#team.v .r3{transition-delay:.15s!important}
-#team.v .r4{transition-delay:.25s!important}
-#team.v .r5{transition-delay:.3s!important}
-#team.v .r6{transition-delay:.35s!important}
-#team.v .r7{transition-delay:.4s!important}
-#team.v .r8{transition-delay:.2s!important}
-#team.v .r9{transition-delay:.45s!important}
-#team.v .r10{transition-delay:.5s!important}
-#team.v .r11{transition-delay:.3s!important}
-#team.v .r12{transition-delay:.55s!important}
-
-/* Team reveal */
-.team-reveal{position:relative;z-index:5;opacity:0;transform:scale(.85);transition:all 1.2s cubic-bezier(.22,1,.36,1)}
-#team.v .team-reveal{opacity:1;transform:scale(1);transition-delay:.8s}
-.team-hub-icon{width:130px;height:130px;border-radius:50%;margin:0 auto 20px;
-  background:radial-gradient(circle,rgba(0,212,255,.1),rgba(124,58,237,.06));
-  box-shadow:0 0 60px rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.08);
-  display:flex;align-items:center;justify-content:center;font-size:44px;position:relative}
-.ring-s{position:absolute;border:1px solid rgba(255,255,255,.05);border-radius:50%;animation:spin 20s linear infinite}
-.rs1{width:180px;height:180px;border-color:rgba(0,212,255,.06)}
-.rs2{width:240px;height:240px;border-color:rgba(124,58,237,.04);animation-direction:reverse;animation-duration:25s}
+.tr{position:relative;z-index:5;opacity:0;transform:scale(.8);transition:all 1.4s cubic-bezier(.22,1,.36,1)}
+#team.v .tr{opacity:1;transform:scale(1);transition-delay:4.8s!important}
+.th{width:140px;height:140px;border-radius:50%;margin:0 auto 24px;background:radial-gradient(circle,rgba(0,212,255,.1),rgba(124,58,237,.06));box-shadow:0 0 60px rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.08);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+.ri{position:absolute;border:1px solid rgba(255,255,255,.05);border-radius:50%;animation:spin 20s linear infinite}
+.r1a{width:190px;height:190px;border-color:rgba(0,212,255,.06)}
+.r2a{width:250px;height:250px;border-color:rgba(124,58,237,.04);animation-direction:reverse;animation-duration:25s}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-.team-reveal h3{font-size:clamp(20px,2.5vw,32px);font-weight:700;margin-bottom:6px}
-.team-reveal p{font-size:clamp(13px,1.1vw,16px);color:rgba(255,255,255,.35);font-weight:400}
+.tr h3{font-size:clamp(22px,2.8vw,34px);font-weight:700;margin-bottom:8px}
+.tr p{font-size:clamp(14px,1.1vw,17px);color:rgba(255,255,255,.35);font-weight:400}
 
 /* === 4 — 窗口的终结 === */
 #paradigm{background:#050508}
@@ -172,12 +154,12 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
 .ft s{background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 
 @media(max-width:768px){
-  .section{padding:40px 16px}
+  .section{padding:50px 16px}
   .nav{padding:0 16px;height:48px}
   .wi1{width:170px;height:115px}.wi2{width:140px;height:95px}.wi3{width:120px;height:85px}
-  .brain-core-icon{width:90px;height:90px;font-size:36px}
-  .team-hub-icon{width:100px;height:100px;font-size:34px}
-  .rs1{width:140px;height:140px}.rs2{width:190px;height:190px}
+  .bc{width:100px;height:100px;font-size:40px}
+  .th{width:110px;height:110px;font-size:38px}
+  .r1a{width:150px;height:150px}.r2a{width:200px;height:200px}
 }
 ::selection{background:rgba(0,212,255,.3);color:#fff}
 ::-webkit-scrollbar{width:5px}
@@ -214,42 +196,44 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
   <div class="hero-scroll"><span>SCROLL</span><div class="l"></div></div>
 </section>
 
-<!-- ====== 2 — 外置大脑（碎片→吸收） ====== -->
+<!-- ====== 2 — 外置大脑 ====== -->
 <section class="section" id="brain">
-  <!-- 碎片云 —— 20+ 日常事务 -->
-  <div class="fragment-cloud">
-    <div class="fr f1" style="top:8%;left:8%"><span>💬</span><span class="l">聊天</span></div>
-    <div class="fr f2" style="top:5%;left:30%"><span>🧠</span><span class="l">记忆</span></div>
-    <div class="fr f3" style="top:10%;left:55%"><span>💡</span><span class="l">灵感</span></div>
-    <div class="fr f4" style="top:6%;right:10%"><span>🌪️</span><span class="l">头脑风暴</span></div>
-    <div class="fr f5" style="top:22%;right:4%"><span>📁</span><span class="l">文件管理</span></div>
-    <div class="fr f6" style="top:38%;right:8%"><span>💰</span><span class="l">记账</span></div>
-    <div class="fr f7" style="top:50%;right:3%"><span>📝</span><span class="l">记事</span></div>
-    <div class="fr f8" style="top:60%;right:12%"><span>⏰</span><span class="l">定时提醒</span></div>
-    <div class="fr f9" style="bottom:15%;right:6%"><span>✍️</span><span class="l">文件撰写</span></div>
-    <div class="fr f10" style="bottom:8%;left:40%"><span>💻</span><span class="l">应用开发</span></div>
-    <div class="fr f11" style="bottom:12%;left:8%"><span>🎤</span><span class="l">语音聊天</span></div>
-    <div class="fr f12" style="bottom:20%;left:22%"><span>📅</span><span class="l">日程安排</span></div>
-    <div class="fr f13" style="top:16%;left:75%"><span>📎</span><span class="l">附件管理</span></div>
-    <div class="fr f14" style="top:45%;left:4%"><span>📖</span><span class="l">知识库</span></div>
-    <div class="fr f15" style="top:55%;left:10%"><span>🔍</span><span class="l">信息检索</span></div>
-    <div class="fr f16" style="top:70%;left:5%"><span>📊</span><span class="l">数据分析</span></div>
-    <div class="fr f17" style="bottom:30%;right:18%"><span>🎯</span><span class="l">目标追踪</span></div>
-    <div class="fr f18" style="bottom:5%;left:65%"><span>📧</span><span class="l">邮件处理</span></div>
-    <div class="fr f19" style="bottom:35%;left:15%"><span>🖼️</span><span class="l">图片处理</span></div>
-    <div class="fr f20" style="top:32%;left:12%"><span>🎵</span><span class="l">音乐推荐</span></div>
+  <div class="fc">
+    <div class="fr f1" style="top:5%;left:4%"><span>💬</span><span class="l">聊天</span></div>
+    <div class="fr f2" style="top:3%;left:30%"><span>🧠</span><span class="l">记忆</span></div>
+    <div class="fr f3" style="top:8%;left:56%"><span>💡</span><span class="l">灵感</span></div>
+    <div class="fr f4" style="top:4%;right:5%"><span>🌪️</span><span class="l">头脑风暴</span></div>
+    <div class="fr f5" style="top:18%;right:2%"><span>📁</span><span class="l">文件管理</span></div>
+    <div class="fr f6" style="top:34%;right:5%"><span>💰</span><span class="l">记账</span></div>
+    <div class="fr f7" style="top:45%;right:2%"><span>📝</span><span class="l">记事</span></div>
+    <div class="fr f8" style="top:58%;right:8%"><span>⏰</span><span class="l">定时提醒</span></div>
+    <div class="fr f9" style="bottom:10%;right:4%"><span>✍️</span><span class="l">撰写</span></div>
+    <div class="fr f10" style="bottom:4%;left:48%"><span>💻</span><span class="l">开发</span></div>
+    <div class="fr f11" style="bottom:18%;left:5%"><span>🎤</span><span class="l">语音</span></div>
+    <div class="fr f12" style="bottom:30%;left:22%"><span>📅</span><span class="l">日程</span></div>
+    <div class="fr f13" style="top:16%;left:80%"><span>📎</span><span class="l">附件</span></div>
+    <div class="fr f14" style="top:42%;left:4%"><span>📖</span><span class="l">知识库</span></div>
+    <div class="fr f15" style="top:54%;left:7%"><span>🔍</span><span class="l">搜索</span></div>
+    <div class="fr f16" style="top:70%;left:3%"><span>📊</span><span class="l">分析</span></div>
+    <div class="fr f17" style="bottom:35%;right:14%"><span>🎯</span><span class="l">目标</span></div>
+    <div class="fr f18" style="bottom:4%;left:70%"><span>📧</span><span class="l">邮件</span></div>
+    <div class="fr f19" style="bottom:40%;left:12%"><span>🖼️</span><span class="l">图片</span></div>
+    <div class="fr f20" style="top:28%;left:12%"><span>🎵</span><span class="l">音乐</span></div>
+    <div class="fr f21" style="top:64%;right:2%"><span>📞</span><span class="l">通话</span></div>
+    <div class="fr f22" style="bottom:8%;left:25%"><span>🗺️</span><span class="l">导航</span></div>
+    <div class="fr f23" style="top:50%;left:60%"><span>📰</span><span class="l">资讯</span></div>
+    <div class="fr f24" style="bottom:45%;right:22%"><span>🏋️</span><span class="l">健康</span></div>
   </div>
 
   <div class="section-inner" style="position:relative;z-index:3">
     <p class="section-sub animate">个人 · 外置大脑</p>
     <h2 class="section-title animate d1">你的日常琐碎</h2>
-    <p class="section-sub animate d2" style="margin-bottom:20px;color:rgba(255,255,255,.2)">
-      工作、生活、学习、创作……每天有太多事情要操心
+    <p class="section-sub animate d2" style="margin-bottom:20px;color:rgba(255,255,255,.18);font-size:clamp(14px,1.2vw,17px)">
+      24 件事，每件都要你亲自操心
     </p>
 
-    <!-- 吸收后的清爽画面 -->
-    <div class="brain-after">
-      <div class="brain-core-icon">🧠</div>
+    <div class="br">
+      <div class="bc">🧠</div>
       <h3>现在，都交给 AuraOS</h3>
       <p>你只需要说出来 — 剩下的，外置大脑替你全部搞定</p>
     </div>
@@ -258,35 +242,30 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
 
 <!-- ====== 3 — 特种团队 ====== -->
 <section class="section" id="team">
-  <!-- 企业角色云 -->
-  <div class="role-cloud">
-    <div class="rl r1" style="top:5%;left:12%"><span class="e">📱</span><span class="t">产品</span></div>
-    <div class="rl r2" style="top:8%;left:38%"><span class="e">💻</span><span class="t">开发</span></div>
-    <div class="rl r3" style="top:4%;right:35%"><span class="e">🎨</span><span class="t">设计</span></div>
-    <div class="rl r4" style="top:10%;right:10%"><span class="e">📊</span><span class="t">运营</span></div>
-    <div class="rl r5" style="top:25%;right:4%"><span class="e">💰</span><span class="t">财务</span></div>
-    <div class="rl r6" style="top:40%;right:2%"><span class="e">👥</span><span class="t">人力</span></div>
-    <div class="rl r7" style="top:55%;right:8%"><span class="e">📋</span><span class="t">行政</span></div>
-    <div class="rl r8" style="top:65%;right:4%"><span class="e">🔬</span><span class="t">研发</span></div>
-    <div class="rl r9" style="bottom:12%;left:30%"><span class="e">📝</span><span class="t">文案</span></div>
-    <div class="rl r10" style="bottom:8%;left:6%"><span class="e">🤝</span><span class="t">销售</span></div>
-    <div class="rl r11" style="bottom:25%;left:4%"><span class="e">🎯</span><span class="t">市场</span></div>
-    <div class="rl r12" style="top:20%;left:6%"><span class="e">🔒</span><span class="t">安全</span></div>
+  <div class="rc">
+    <div class="rl r1" style="top:5%;left:12%"><span>📱</span><span class="t">产品</span></div>
+    <div class="rl r2" style="top:3%;left:38%"><span>💻</span><span class="t">开发</span></div>
+    <div class="rl r3" style="top:7%;right:35%"><span>🎨</span><span class="t">设计</span></div>
+    <div class="rl r4" style="top:5%;right:8%"><span>📊</span><span class="t">运营</span></div>
+    <div class="rl r5" style="top:20%;right:2%"><span>💰</span><span class="t">财务</span></div>
+    <div class="rl r6" style="top:35%;right:3%"><span>👥</span><span class="t">人力</span></div>
+    <div class="rl r7" style="top:48%;right:6%"><span>📋</span><span class="t">行政</span></div>
+    <div class="rl r8" style="top:60%;right:2%"><span>🔬</span><span class="t">研发</span></div>
+    <div class="rl r9" style="bottom:10%;left:32%"><span>📝</span><span class="t">文案</span></div>
+    <div class="rl r10" style="bottom:6%;left:6%"><span>🤝</span><span class="t">销售</span></div>
+    <div class="rl r11" style="bottom:22%;left:3%"><span>🎯</span><span class="t">市场</span></div>
+    <div class="rl r12" style="top:18%;left:5%"><span>🔒</span><span class="t">安全</span></div>
   </div>
 
   <div class="section-inner" style="position:relative;z-index:3">
     <p class="section-sub animate">企业 · 特种团队</p>
     <h2 class="section-title animate d1">部门林立</h2>
-    <p class="section-sub animate d2" style="margin-bottom:20px;color:rgba(255,255,255,.2)">
-      每个部门都要沟通、协调、跟进……效率都耗在流程里
+    <p class="section-sub animate d2" style="margin-bottom:20px;color:rgba(255,255,255,.18);font-size:clamp(14px,1.2vw,17px)">
+      每个部门都要沟通协调，效率都耗在流程里
     </p>
 
-    <div class="team-reveal">
-      <div class="team-hub-icon">
-        <div class="ring-s rs1"></div>
-        <div class="ring-s rs2"></div>
-        <span>🎯</span>
-      </div>
+    <div class="tr">
+      <div class="th"><div class="ri r1a"></div><div class="ri r2a"></div><span>🎯</span></div>
       <h3>一个 AI 特战队，全部接管</h3>
       <p>你只需要下达战略指令 — 各 Agent 自动协作、执行、汇报</p>
     </div>
@@ -298,7 +277,6 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
   <div class="section-inner">
     <p class="section-sub animate">范式转移</p>
     <h2 class="section-title animate d1">窗口的终结</h2>
-
     <div class="ws animate d2">
       <div class="wi wi1"><div class="dt"><span class="b c1"></span><span class="b c2"></span><span class="b c3"></span></div><span class="wl">浏览器</span></div>
       <div class="wi wi2"><div class="dt"><span class="b c1"></span><span class="b c2"></span><span class="b c3"></span></div><span class="wl">文档</span></div>
@@ -333,13 +311,10 @@ const obs=new IntersectionObserver(e=>{e.forEach(e=>{
   }
 })},{threshold:.3})
 document.querySelectorAll('.section').forEach(e=>obs.observe(e))
-
 document.querySelectorAll('.nav-dot').forEach(e=>{e.addEventListener('click',()=>{
   const s=document.querySelectorAll('.section')[parseInt(e.dataset.i)]
   if(s)s.scrollIntoView({behavior:'smooth'})
 })})
-
-// Parallax
 document.addEventListener('scroll',()=>{
   const y=window.pageYOffset,h=document.querySelector('#hero')
   if(h&&y<h.offsetHeight){
