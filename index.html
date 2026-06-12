@@ -92,16 +92,19 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
 #brain.v .f23{transition-delay:4.0s!important}
 #brain.v .f24{transition-delay:4.5s!important}
 
-/* Brain neural network SVG */
-.brain-svg{width:clamp(160px,18vw,260px);height:clamp(160px,18vw,260px);margin:0 auto 32px;display:block;position:relative}
-.brain-svg .n{fill:rgba(0,212,255,.15);transition:all 1.5s ease;animation:nodePulse 3s ease-in-out infinite}
-.brain-svg .n.c{fill:#00d4ff;box-shadow:0 0 20px #00d4ff}
-.brain-svg .l{stroke:rgba(0,212,255,.08);stroke-width:1;stroke-dasharray:4 3;animation:lineDash 10s linear infinite}
-.brain-svg .l.a{stroke:rgba(124,58,237,.1);animation-duration:12s;animation-direction:reverse}
-.brain-svg .g{fill:none;stroke:url(#brainGrad);stroke-width:1.5;opacity:.3;animation:glowPulse 4s ease-in-out infinite}
-@keyframes nodePulse{0%,100%{opacity:.3}50%{opacity:.8}}
+/* Brain neural network SVG — enhanced visibility */
+.brain-svg{width:clamp(180px,20vw,280px);height:clamp(180px,20vw,280px);margin:0 auto 32px;display:block;position:relative}
+.brain-svg .bg-glow{position:absolute;inset:-20px;background:radial-gradient(circle,rgba(0,212,255,.06) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.brain-svg .n{fill:rgba(0,212,255,.6);transition:all 1.5s ease;animation:nodePulse 3s ease-in-out infinite}
+.brain-svg .n.c{fill:#00d4ff;filter:drop-shadow(0 0 8px rgba(0,212,255,.8))}
+.brain-svg .n.s{fill:rgba(124,58,237,.5)}
+.brain-svg .l{stroke:rgba(0,212,255,.25);stroke-width:1.5;stroke-dasharray:4 4;animation:lineDash 10s linear infinite}
+.brain-svg .l.a{stroke:rgba(124,58,237,.2);animation-duration:12s;animation-direction:reverse}
+.brain-svg .l.t{stroke:rgba(0,212,255,.1);stroke-width:.8;stroke-dasharray:2 5}
+.brain-svg .g{fill:none;stroke:url(#brainGrad);stroke-width:2;opacity:.6;animation:glowPulse 4s ease-in-out infinite}
+@keyframes nodePulse{0%,100%{opacity:.5}50%{opacity:1}}
 @keyframes lineDash{to{stroke-dashoffset:-40}}
-@keyframes glowPulse{0%,100%{opacity:.2}50%{opacity:.5}}
+@keyframes glowPulse{0%,100%{opacity:.3}50%{opacity:.7}}
 
 .br{position:relative;z-index:5;opacity:0;transform:scale(.8);transition:all 1.4s cubic-bezier(.22,1,.36,1)}
 #brain.v .br{opacity:1;transform:scale(1);transition-delay:5.2s!important}
@@ -263,46 +266,66 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
     </p>
 
     <div class="br">
-      <!-- Neural network SVG brain -->
-      <svg class="brain-svg" viewBox="0 0 200 200">
-        <defs>
-          <radialGradient id="brainGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#00d4ff" stop-opacity=".3"/>
-            <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <!-- Outer glow ring -->
-        <ellipse class="g" cx="100" cy="95" rx="75" ry="70"/>
-        <ellipse class="g" cx="100" cy="95" rx="55" ry="50" style="animation-delay:1s"/>
-        <!-- Connection lines -->
-        <line class="l" x1="100" y1="30" x2="100" y2="95"/>
-        <line class="l a" x1="100" y1="95" x2="50" y2="150"/>
-        <line class="l" x1="100" y1="95" x2="150" y2="150"/>
-        <line class="l a" x1="50" y1="150" x2="150" y2="150"/>
-        <line class="l" x1="60" y1="60" x2="140" y2="60"/>
-        <line class="l a" x1="60" y1="60" x2="100" y2="95"/>
-        <line class="l" x1="140" y1="60" x2="100" y2="95"/>
-        <line class="l a" x1="40" y1="110" x2="100" y2="95"/>
-        <line class="l" x1="160" y1="110" x2="100" y2="95"/>
-        <line class="l a" x1="40" y1="110" x2="50" y2="150"/>
-        <line class="l" x1="160" y1="110" x2="150" y2="150"/>
-        <!-- Nodes -->
-        <circle class="n c" cx="100" cy="30" r="5"/>
-        <circle class="n" cx="100" cy="95" r="7"/>
-        <circle class="n" cx="50" cy="150" r="4" style="animation-delay:.5s"/>
-        <circle class="n" cx="150" cy="150" r="4" style="animation-delay:.7s"/>
-        <circle class="n" cx="60" cy="60" r="3" style="animation-delay:.3s"/>
-        <circle class="n" cx="140" cy="60" r="3" style="animation-delay:.4s"/>
-        <circle class="n" cx="40" cy="110" r="3.5" style="animation-delay:.6s"/>
-        <circle class="n" cx="160" cy="110" r="3.5" style="animation-delay:.8s"/>
-        <circle class="n" cx="80" cy="145" r="2.5" style="animation-delay:.2s"/>
-        <circle class="n" cx="120" cy="145" r="2.5" style="animation-delay:.9s"/>
-        <!-- Small peripheral dots -->
-        <circle class="n" cx="70" cy="35" r="2" style="animation-delay:.4s"/>
-        <circle class="n" cx="130" cy="35" r="2" style="animation-delay:.6s"/>
-        <circle class="n" cx="35" cy="130" r="2" style="animation-delay:.7s"/>
-        <circle class="n" cx="165" cy="130" r="2" style="animation-delay:.5s"/>
-      </svg>
+      <!-- Enhanced Neural network SVG brain -->
+      <div class="brain-svg">
+        <div class="bg-glow"></div>
+        <svg viewBox="0 0 200 200" style="width:100%;height:100%;position:relative;z-index:2">
+          <defs>
+            <radialGradient id="brainGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#00d4ff" stop-opacity=".5"/>
+              <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="bigGlow">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Outer glow rings -->
+          <ellipse class="g" cx="100" cy="90" rx="78" ry="72"/>
+          <ellipse class="g" cx="100" cy="90" rx="55" ry="50" style="animation-delay:1s"/>
+          <ellipse class="g" cx="100" cy="90" rx="35" ry="32" style="animation-delay:2s"/>
+          <!-- Tertiary fine connections -->
+          <line class="l t" x1="70" y1="35" x2="60" y2="60"/>
+          <line class="l t" x1="130" y1="35" x2="140" y2="60"/>
+          <line class="l t" x1="35" y1="130" x2="40" y2="110"/>
+          <line class="l t" x1="165" y1="130" x2="160" y2="110"/>
+          <!-- Main connection lines -->
+          <line class="l" x1="100" y1="25" x2="100" y2="90"/>
+          <line class="l a" x1="100" y1="90" x2="50" y2="145"/>
+          <line class="l" x1="100" y1="90" x2="150" y2="145"/>
+          <line class="l a" x1="50" y1="145" x2="150" y2="145"/>
+          <line class="l" x1="60" y1="60" x2="140" y2="60"/>
+          <line class="l a" x1="60" y1="60" x2="100" y2="90"/>
+          <line class="l" x1="140" y1="60" x2="100" y2="90"/>
+          <line class="l a" x1="35" y1="105" x2="100" y2="90"/>
+          <line class="l" x1="165" y1="105" x2="100" y2="90"/>
+          <line class="l a" x1="35" y1="105" x2="50" y2="145"/>
+          <line class="l" x1="165" y1="105" x2="150" y2="145"/>
+          <!-- Layer 1: Core nodes (largest, brightest) -->
+          <circle class="n c" cx="100" cy="25" r="6" filter="url(#bigGlow)"/>
+          <circle class="n c" cx="100" cy="90" r="8" filter="url(#bigGlow)"/>
+          <circle class="n c" cx="50" cy="145" r="5.5" style="animation-delay:.5s" filter="url(#bigGlow)"/>
+          <circle class="n c" cx="150" cy="145" r="5.5" style="animation-delay:.7s" filter="url(#bigGlow)"/>
+          <!-- Layer 2: Mid nodes -->
+          <circle class="n" cx="60" cy="60" r="4.5" style="animation-delay:.3s" filter="url(#glow)"/>
+          <circle class="n" cx="140" cy="60" r="4.5" style="animation-delay:.4s" filter="url(#glow)"/>
+          <circle class="n s" cx="35" cy="105" r="5" style="animation-delay:.6s" filter="url(#glow)"/>
+          <circle class="n s" cx="165" cy="105" r="5" style="animation-delay:.8s" filter="url(#glow)"/>
+          <circle class="n" cx="80" cy="140" r="3.5" style="animation-delay:.2s"/>
+          <circle class="n" cx="120" cy="140" r="3.5" style="animation-delay:.9s"/>
+          <!-- Layer 3: Peripheral dots -->
+          <circle class="n" cx="70" cy="35" r="3" style="animation-delay:.4s"/>
+          <circle class="n s" cx="130" cy="35" r="3" style="animation-delay:.6s"/>
+          <circle class="n s" cx="30" cy="125" r="2.5" style="animation-delay:.7s"/>
+          <circle class="n" cx="170" cy="125" r="2.5" style="animation-delay:.5s"/>
+          <circle class="n" cx="40" cy="160" r="2" style="animation-delay:.3s"/>
+          <circle class="n s" cx="160" cy="160" r="2" style="animation-delay:.9s"/>
+        </svg>
+      </div>
       <h3>现在，都交给 AuraOS</h3>
       <p class="tagline">你只需要说出来 — 剩下的，外置大脑替你全部搞定</p>
     </div>
@@ -393,7 +416,7 @@ h1,h2{font-weight:800;line-height:1;letter-spacing:-0.03em}
     <h2 class="cta-t animate">告别窗口</h2>
     <p class="section-sub animate d1" style="margin-bottom:28px;color:rgba(255,255,255,.25);text-transform:none;letter-spacing:.04em">你只需要——说出来</p>
     <a href="#" class="cta-b animate d2">了解更多</a>
-    <p class="ft animate d3"><s>AuraOS</s> · 你的电脑，何必再有窗口</p>
+    <p class="ft animate d3">AuraOS · 你的电脑，何必再有<s>窗口</s></p>
   </div>
 </section>
 
